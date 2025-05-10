@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hajj Navigator Tool</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
+      margin: 0;
+    }
+    .container {
+      max-width: 850px;
+      background: white;
+      padding: 40px;
+      margin: auto;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #343a40;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin: 20px 0 8px;
+      color: #495057;
+    }
+    select, button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      font-size: 16px;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+      margin-bottom: 20px;
+    }
+    select:focus, button:focus {
+      outline: none;
+      border-color: #5e72e4;
+    }
+    button {
+      background-color: #5e72e4;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #324cdd;
+    }
+    h2 {
+      color: #1d3557;
+      margin-top: 30px;
+      font-size: 26px;
+    }
+    h3 {
+      color: #343a40;
+      margin-top: 24px;
+      font-size: 20px;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 6px;
+    }
+    ol, ul {
+      padding-left: 20px;
+      line-height: 1.8;
+      color: #212529;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    #result {
+      margin-top: 30px;
+      background: #fdfdfd;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <center><h2><img src="https://img.icons8.com/ios-filled/30/000000/kaaba.png" alt="Kaaba Icon" style="vertical-align: middle; margin-right: 8px;">Hajj Navigator Tool</h2></center>
+  <p style="text-align: center; font-size: 0.95rem; margin-top: -10px; margin-bottom: 30px; color: #666;">
+      by <a href="https://theblessednights.com" target="_blank" style="color: #1e88e5; font-weight: 500;">TheBlessedNights</a>
+    </p>
+
+<div class="container">
+    <div class="note" style="margin-bottom: 30px; background: #fffbe6; padding: 15px 20px; border-left: 5px solid #f1c40f; border-radius: 8px; font-size: 0.9rem; color: #555;">
+      <strong>Disclaimer:</strong> This tool is for quick Hajj guidance and help only. For details, read our detailed <a href="https://theblessednights.com/how-to-perform-hajj/" target="_blank" style="color: #1e88e5; font-weight: 500;">Hajj Guide</a> and stay in close contact with a credible scholar for any fiqh related issues.
+    </div>
+
+
+
+    <label for="hajjType">Select Your Hajj Type:</label>
+    <select id="hajjType">
+      <option value="">Select Hajj Type</option>
+      <option value="tamattu">Hajj al-Tamattu</option>
+      <option value="qiran">Hajj al-Qiran</option>
+      <option value="ifrad">Hajj al-Ifrad</option>
+    </select>
+
+    <label for="hajjTopic">What Do You Want Help With?</label>
+    <select id="hajjTopic">
+      <option value="">Select Topic</option>
+      <option value="umrah_method">Umrah Method</option>
+       <option value="snapshot">Complete Hajj Snapshot</option>
+      <option value="qudoom">Tawaf al-Qudoom</option>
+      <option value="8dh">8th Dhul Hijjah – Day of Tarwiyah</option>
+      <option value="9dh_arafat">9th Dhul Hijjah – Day of Arafah</option>
+      <option value="muzdalifah">Muzdalifah Night – After Arafat</option>
+      <option value="10dh">10th Dhul Hijjah – Rami, Sacrifice, Shaving & Tawaf</option>
+      <option value="11dh">11th Dhul Hijjah – Rami of All Three Jamarat</option>
+      <option value="12dh">12th Dhul Hijjah – Final Rami or Departure</option>
+      <option value="13dh">13th Dhul Hijjah – Optional Final Rami</option>
+      <option value="ziyarat">Tawaf al-Ziyarah</option>
+      <option value="saee">Sa’ee (Hajj)</option>
+      <option value="wida">Tawaf al-Wida – Farewell Tawaf</option>
+    </select>
+
+    <button id="getInstructions">Get Instructions</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const hajjContent = {
+      "umrah_method": {
+        "title": "Umrah Method",
+        "intro": "Umrah is a distinct act of worship that consists of specific rituals. It includes 1 Fardh (Tawaf) and 2 Wajibs (Ihram and Sa’ee). Missing the Fardh invalidates Umrah, and missing a Wajib requires a penalty (dam).<br><br>➡️ Umrah is performed as part of Hajj al-Tamattu and Hajj al-Qiran. It is not included in Hajj al-Ifrad.<br><br>✔️ In Hajj al-Tamattu, you complete Umrah before Hajj, then exit Ihram completely and remain in Makkah until the 8th of Dhul Hijjah. On that day, you enter into Ihram again for the Hajj rituals.<br>✔️ In Hajj al-Qiran, you stay in the same Ihram after completing Umrah and continue directly into the Hajj rites without exiting Ihram.<br><br>Below are the detailed steps:",
+        "steps": [
+          "Enter into Ihram before the Miqat with the intention of Umrah. Recite the Talbiyah:",
+          "<em>لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</em>",
+          "Upon reaching Makkah, go to Masjid al-Haram and perform Tawaf — 7 anti-clockwise rounds around the Ka’bah starting and ending at Hajr al-Aswad.",
+          "After Tawaf, offer 2 rak’ahs behind Maqam Ibrahim if space allows.",
+          "Drink Zamzam water and make dua. Recommended dua while drinking:<br><br><em>اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمَاً نَافِعَاًً وَرِزْقَاً وَاسِعَاًَ وَشِفَاءً مِنْ كُلِّ دَاءٍ</em><br><em>Transliteration:</em> Allahumma inni as’aluka ‘ilman naafi‘an, wa rizqan waasi‘an, wa shifaa’an min kulli daa’.<br><em>Translation:</em> O Allah, I ask You for beneficial knowledge, abundant provision, and healing from every disease.",
+          "Now proceed to Safa to begin Sa’ee. At Safa, recite:<br><br><em>إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ...</em><br>Then face the Ka’bah, raise your hands, and make the following declarations and dua:",
+          "Say Allahu Akbar 3 times, then:<br><em>اَشْهَدُ اَنْ لَّآ اِلٰهَ اِلَّا اللهُ وَحْدَهُ لَاشَرِيْكَ لَہٗ وَاَشْهَدُ اَنَّ مُحَمَّدًا عَبْدُهٗ وَرَسُولُہٗ</em><br>and<br><em>لا اِلهَ اِلَّا اللّهُ وَحْدَهُ لا شَرِيكَ لَهُ ، لَهُ الْمُلْكُ وَ لَهُ الْحَمْدُ وَ هُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</em><br>Then recite Durood Ibrahimi and make dua.",
+          "Walk from Safa to Marwa — this is one round. Jog (men only) between the green lights while reciting:<br><em>رَبِّ اغفِر وارحَم اَنتَ الاَ عَزُّالاَکرَم</em>",
+          "Upon reaching Marwa, repeat the same dua and declaration made at Safa. That completes one round. Repeat this process back and forth until you complete 7 rounds ending at Marwa.",
+          "After Sa’ee, men must shave their head or trim evenly. Women cut a fingertip length of hair.",
+          "You are now completely out of Ihram and Umrah is complete."
+        ]
+      },
+
+      "snapshot_tamattu": {
+        title: "Complete Hajj Snapshot – Hajj al-Tamattu",
+        intro: `This is a high-level summary of Hajj al-Tamattu, typically performed by pilgrims who enter Makkah before Hajj and perform Umrah first. They then exit Ihram, rest in Makkah, and re-enter Ihram for Hajj on the 8th of Dhul Hijjah.<br><br>Below is the step-by-step summary:`,
+        steps: [
+          "Perform Umrah after arriving in Makkah: Tawaf → Sa’ee → Shaving/Trimming → Exit Ihram.",
+          "Stay in Makkah in normal clothes until 8th Dhul Hijjah.",
+          "8th Dhul Hijjah: Enter Ihram again for Hajj and go to Mina. Offer Dhuhr, Asr, Maghrib, Isha, and Fajr in your Mina camps in congregation (Jamat) at their respective times",
+          "9th Dhul Hijjah: Proceed to Arafat after Fajr, stay there till sunset. Pray Dhuhr and Asr separately at their respective times in your camps with Jamat. Engage in dua and dhikr.",
+          "After sunset, leave for Muzdalifah without praying Maghrib. Pray Maghrib and Isha combined in Muzdalifah and sleep the night there.",
+          "10th Dhul Hijjah: After Fajr, go to Mina. Perform Rami (stone big Jamrah), offer sacrifice (mandatory), shave/cut hair, and exit Ihram partially (except intimacy). Then proceed to Makkah for Tawaf al-Ziyarah and Sa’ee (if not done after Umrah). Now exit Ihram completely.",
+          "11th and 12th Dhul Hijjah: Perform Rami of all 3 Jamarat after Zawal each day. Spend the nights in Mina.",
+          "Optionally stay for 13th Dhul Hijjah and perform Rami again.",
+          "Before leaving Makkah, perform Tawaf al-Wida (Farewell Tawaf)."
+        ]
+      },
+      "snapshot_qiran": {
+        title: "Complete Hajj Snapshot – Hajj al-Qiran",
+        intro: `This is a high-level summary of Hajj al-Qiran. The pilgrim performs both Umrah and Hajj in one continuous state of Ihram. They do not exit Ihram after Umrah and continue directly into the Hajj rituals.<br><br>Below is the step-by-step summary:`,
+        steps: [
+          "Make intention for both Umrah and Hajj at the Miqat and enter into Ihram.",
+          "Upon arriving in Makkah, perform Umrah: Tawaf → Sa’ee. But do not shave or trim hair as you'll remain in Ihram for Hajj",
+	  "Perform Tawaf al-Qudoom before 8th Dhul Hijjah and optionally perform Sa’ee of Hajj as well.",
+          "Stay in Ihram — do not shave or trim hair. Continue wearing Ihram until 10th Dhul Hijjah.",
+          "8th Dhul Hijjah: Go to Mina. Offer Dhuhr, Asr, Maghrib, Isha, and Fajr in Mina.",
+          "9th Dhul Hijjah: Proceed to Arafat after Fajr. Stay till sunset, pray Dhuhr and Asr separately in your camp at their respective times. Do dhikr and dua.",
+          "After sunset, proceed to Muzdalifah without praying Maghrib. Offer Maghrib and Isha combined, stay overnight.",
+          "10th Dhul Hijjah: Perform Rami of big Jamrah, offer sacrifice (mandatory), and only then shave or trim hair. You may now exit Ihram partially. Then go to Makkah for Tawaf al-Ziyarah and perform Sa’ee (if not done earlier). Now exit Ihram completely.",
+          "11th and 12th Dhul Hijjah: Perform Rami of all three Jamarat after Zawal. Spend the nights in Mina.",
+          "Optionally stay for 13th Dhul Hijjah and perform Rami.",
+          "Before leaving Makkah, perform Tawaf al-Wida (Farewell Tawaf)."
+        ]
+      },
+      "muzdalifah": {
+        "title": "Muzdalifah Night – After Arafat",
+        "intro": "After sunset on the Day of Arafat (9th Dhul Hijjah), pilgrims travel to Muzdalifah to collect pebbles, offer prayers, and rest under the open sky. This night is part of the Hajj rites and should be spent meaningfully.",
+        "steps": [
+          "Leave Arafat immediately after sunset without praying Maghrib.",
+          "Reach Muzdalifah and find your camp spot. It may take several hours depending on traffic.",
+          "Once settled, offer Maghrib and Isha together — 3 rak’ah Maghrib and 2 rak’ah Isha — with one adhan and two iqamahs.",
+          "Collect 49 pebbles for the days of Rami: 7 for the 10th, 21 for the 11th, and 21 for the 12th. Collect a few extras in case you drop any.",
+          "Rest under the open sky. Use a mat or light bedding. Stay with your group and protect your belongings.",
+          "Offer Fajr prayer at its time and make heartfelt dua after Fajr. This is a time of acceptance.",
+          "Leave for Mina before sunrise with your group to perform Rami."
+        ],
+        "tips": [
+          "Avoid pushing or rushing while collecting pebbles — take your time and be safe.",
+          "Use a small pouch or bottle to store pebbles separately from other items.",
+          "Dress warmly and bring a light sheet — it can get cold in Muzdalifah at night.",
+          "Do not engage in unnecessary conversations. Use this night for reflection, rest, and silent dhikr.",
+          "Follow group instructions and stay close to your companions."
+        ]
+      },
+
+      "saee": {
+        "title": "Sa’ee (Hajj)",
+        "intro": "Sa’ee is a wajib ritual of Hajj. It involves walking seven times between the hills of Safa and Marwah. For Tamattu pilgrims, it is done after Tawaf al-Ziyarah. For Qiran and Ifrad, it can be done after Tawaf al-Qudoom or Tawaf al-Ziyarah.",
+        "steps": [
+          "Ensure you are in a state of wudhu before starting. It is preferred, though Sa’ee is still valid without it.",
+          "Before entering the Sa’ee area, perform the Signal of Istilam toward Hajr e Aswad from near the Ka’bah.",
+          "Now proceed to the Sa’ee area (Mas’a) and begin at Mount Safa.",
+          "At Safa, recite:<br><br><em>إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ...</em><br><strong>Translation:</strong> Indeed, as-Safa and al-Marwah are among the symbols of Allah...",
+          "Make niyyah (intention): 'O Allah! I intend to perform Sa’ee between Safa and Marwa to seek Your pleasure. Make it easy for me and accept it from me.'",
+          "Face the Ka’bah, raise hands and say Allahu Akbar three times, then recite the Shahadah and the dua:<br><br><em>لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير</em><br><br>Then recite Durood e Ibraheemi and make personal dua.",
+          "Begin Sa’ee walking from Safa to Marwa. This is Round 1.",
+          "Between the green markers, men should jog and recite:<br><br><em>رَبِّ اغفِر وارحَم اَنتَ الاَ عَزُّالاَکرَم</em><br><strong>Translation:</strong> O my Lord! Forgive me, have mercy on me. You are the Most Mighty and Honorable.",
+          "At Marwa, face the Ka’bah again, repeat the same takbeer, shahadah, Durood, and make dua. This completes one round.",
+          "Return to Safa for Round 2. Continue this way until you complete 7 rounds, ending at Marwah.",
+          "After finishing your Sa’ee, offer 2 Rakat Nafl if it's not a prohibited time, ideally in Mataf facing Hajr e Aswad or anywhere in Masjid al-Haram."
+        ],
+        "tips": [
+          "Use this time to pour your heart out to Allah — Sa’ee is a moment of deep connection.",
+          "Stay hydrated, especially if Sa’ee follows Tawaf al-Ziyarah.",
+          "Jog gently and only in the designated green-lit zone if you’re a man.",
+          "You may recite Quran, dua, or do silent dhikr during Sa’ee — there's no fixed format.",
+          "Elderly or unwell pilgrims can use a wheelchair; Sa’ee remains valid."
+        ]
+      },
+
+      "ziyarat": {
+        "title": "Tawaf al-Ziyarah (Tawaf al-Ifadah)",
+        "intro": "This Tawaf is a Fard (obligatory) ritual of Hajj and must be completed before sunset of the 12th Dhul Hijjah. It is usually done on the 10th Dhul Hijjah after Rami, Sacrifice, and Shaving. Without it, Hajj is invalid.",
+        "steps": [
+          "Make sure you are in a state of wudhu before entering Masjid al-Haram.",
+          "Enter the mosque and approach Hajr al-Aswad to begin your Tawaf.",
+          "Perform Istilam at the starting point (raise hands, say:<br><br><em>بِسْمِ اللَّهِ، اللَّهُ أَكْبَر</em>, then drop your hands or kiss them).",
+          "Complete 7 anti-clockwise circuits around the Ka'bah, beginning and ending at Hajr al-Aswad.",
+          "Men should do Ramal (quick short steps) in the first 3 rounds and keep their right shoulder uncovered (Iztiba) if still in Ihram.",
+          "Touch Rukn-e-Yamani if possible, and between it and Hajr al-Aswad, recite:<br><br><em>رَبَّنَا آتِنَا فِى الدُّنْيَا حَسَنَةً وَفِى الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</em>",
+          "After Tawaf, offer 2 rak'ahs of prayer behind Maqam Ibrahim if space allows.",
+          "Drink Zamzam and make heartfelt dua.",
+          "If Sa’ee hasn’t been done yet (for Tamattu or if delayed in Qiran/Ifrad), perform Sa’ee now.",
+          "Once Tawaf and Sa’ee are complete, all Ihram restrictions are lifted."
+        ],
+        "tips": [
+          "Do not rush into this Tawaf immediately after Rami. Rest at your camp and go later when it’s less crowded (after Maghrib or Isha).",
+          "Maintain full wudhu throughout the Tawaf — it is a condition for validity.",
+          "This is a powerful time for dua. Bring a list or use this opportunity to make heartfelt supplications from memory.",
+          "Tawaf al-Ziyarah can take time due to crowding, especially on the 10th Dhul Hijjah. Stay patient and avoid pushing.",
+          "Avoid distractions — use this opportunity to deeply connect with Allah."
+        ]
+      },
+
+      "wida": {
+        "title": "Tawaf al-Wida – Farewell Tawaf",
+        "intro": "This is the final act of Hajj before leaving Makkah. It is wajib (obligatory) for all pilgrims who came from outside the Miqat. It should ideally be done before departure, with no long delay between the Tawaf and exiting the city of Makkah.",
+        "steps": [
+          "Make the intention of Tawaf Al-Wida. You can perform it any time after Tawaf Al Ziyarah. But it's better to make it the last Tawaf of your Hajj journey beffore leaving Makkah.",
+          "Enter Masjid al-Haram in a state of wudhu.",
+          "Begin Tawaf at Hajr al-Aswad and complete 7 anti-clockwise rounds.",
+          "You do not need to do Ramal (brisk walking) or Iztiba (uncovering the shoulder) in this Tawaf.",
+          "Wear your regular clothing — Ihram is not required.",
+          "No Sa’ee is performed after this Tawaf.",
+          "After completing Tawaf, offer two rak’ahs behind Maqam Ibrahim if space is available.",
+          "Drink Zamzam water and make your final duas before leaving Makkah."
+        ],
+        "tips": [
+          "Avoid doing any unnecessary shopping or sightseeing after this Tawaf.",
+          "If a woman is menstruating, she is exempt from this Tawaf and can leave without performing it.",
+          "Use this moment to express gratitude and seek acceptance of your Hajj."
+        ]
+      },
+
+      "13dh": {
+        "title": "13th Dhul Hijjah – Optional Final Rami",
+        "intro": "This is the final day of Tashreeq. Rami on this day becomes wajib only if you remain in Mina after sunset on the 12th Dhul Hijjah. If you stayed, perform Rami at all three Jamarat once again.",
+        "steps": [
+          "After Zawal (midday), head to the Jamarat complex with your group.",
+          "Begin with the small Jamrah (Jamrat al-Sughra): Throw 7 pebbles one by one, saying:<br><br><em>بِسْمِ اللَّهِ، اللَّهُ أَكْبَر</em> with each throw. Make dua afterward.",
+          "Move to the middle Jamrah (Jamrat al-Wusta): Throw 7 pebbles and again pause to make dua afterward.",
+          "Finally, proceed to the big Jamrah (Jamrat al-Aqabah): Throw 7 pebbles — no dua is made afterward.",
+          "Once Rami is complete, return to your Mina camp, gather your belongings, and prepare to depart for Makkah.",
+          "There is no need to spend the night in Mina after completing this Rami."
+        ],
+        "tips": [
+          "This Rami is only required if you were in Mina after sunset on the 12th.",
+          "Try to go during off-peak hours to avoid overcrowding at the Jamarat.",
+          "Ensure you throw each pebble individually and avoid using large stones or tossing multiple pebbles at once.",
+          "Spend the rest of the time in gratitude, dua, and reflection — your Hajj journey is now nearly complete."
+        ]
+      },
+
+      "12dh": {
+        "title": "12th Dhul Hijjah – Final Rami or Departure",
+        "intro": "This is the second day of Tashreeq and your last required day in Mina unless you plan to stay for the optional 13th Dhul Hijjah. You will again perform Rami at all three Jamarat.",
+        "steps": [
+          "Remain in Mina and engage in worship, reflection, and rest until Zawal (midday).",
+          "After Zawal, proceed with your group to the Jamarat complex.",
+          "Begin with the small Jamrah (Jamrat al-Sughra). Throw 7 pebbles, saying:<br><br><em>بِسْمِ اللَّهِ، اللَّهُ أَكْبَر</em> with each stone. Then make dua to the side afterward.",
+          "Next, go to the middle Jamrah (Jamrat al-Wusta). Throw 7 pebbles the same way and again pause to make dua afterward.",
+          "Finally, go to the big Jamrah (Jamrat al-Aqabah). Throw 7 pebbles — no dua is made after this one.",
+          "If you intend to leave Mina and not stay for the 13th, you must exit before Maghrib. Otherwise, staying for the 13th becomes wajib.",
+          "If staying, return to your Mina camp, rest, and prepare for Rami the next day."
+        ],
+        "tips": [
+          "Ensure you perform Rami after Zawal — before that time it is not valid.",
+          "Keep your bag packed if you plan to depart after Rami today — buses may leave quickly.",
+          "Do not delay your decision. If you're still in Mina after sunset, you must stay for the 13th and perform Rami again.",
+          "Spend the rest of the day engaged in ibadah — dua, dhikr, and rest."
+        ]
+      },
+
+      "11dh": {
+        "title": "11th Dhul Hijjah – Rami of All Three Jamarat",
+        "intro": "This is the first day of Tashreeq. Pilgrims must perform Rami at all three Jamarat: the small, middle, and big pillars. It marks the continuation of the stoning ritual and staying in Mina.",
+        "steps": [
+          "Remain in your Mina camp after Fajr. Rest, hydrate, and prepare for Rami.",
+          "After Zawal (midday), proceed with your group to the Jamarat complex.",
+          "Start with the small Jamrah (Jamrat al-Sughra). Throw 7 pebbles, one at a time, saying:<br><br><em>بِسْمِ اللَّهِ، اللَّهُ أَكْبَر</em> with each throw.",
+          "After stoning, move slightly to the side, face the Qiblah, and make a long dua.",
+          "Proceed to the middle Jamrah (Jamrat al-Wusta). Throw 7 pebbles similarly, and again pause to make dua after stoning.",
+          "Then go to the big Jamrah (Jamrat al-Aqabah). Throw 7 pebbles the same way — no dua is made after this one.",
+          "Return to your Mina camp and spend the rest of the day and night in worship and rest."
+        ],
+        "tips": [
+          "Only perform Rami after Zawal. It's not valid before that time.",
+          "Carry only the 21 pebbles needed today in a pouch to avoid confusion.",
+          "Stay with your group and avoid crowd surges. Wait for safer timings if it's too crowded.",
+          "Take breaks and hydrate often, especially if you're going during hotter hours.",
+          "Remain in Mina overnight — it’s Sunnah Al-Mawakkadah unless you're involved in Tawaf Al Ziyarah or some other valid excuse'."
+        ]
+      },
+
+      "10dh": {
+        "title": "10th Dhul Hijjah – Eid Day: Rami, Sacrifice, Shaving & Tawaf",
+        "intro": "This is the busiest and most action-packed day of Hajj. You’ll perform multiple essential rituals today: stoning, sacrifice, hair removal, and Tawaf. The order matters, but slight variations are acceptable based on your group’s logistics.",
+        "steps": [
+          "Wake up early in Muzdalifah. Offer Fajr salah at its time.",
+          "Collect 7 pebbles (if not already done the night before) for Rami today.",
+          "Head to Mina and perform Rami al-Aqabah (stoning only the big Jamrah). Say:<br><br><em>بِسْمِ اللَّهِ، اللَّهُ أَكْبَر</em> with each stone.",
+          "After Rami, perform your Qurbani (sacrifice). This is wajib for those doing Hajj al-Tamattu or Qiran. Confirm your group has done this before proceeding.",
+          "After the sacrifice is confirmed, men should shave their heads completely (recommended) or trim all over. Women should cut a fingertip-length of hair.",
+          "You may now exit Ihram partially — you can change clothes and apply perfume. Intimacy with spouse is still not allowed until Tawaf.",
+          "Proceed to Makkah for Tawaf al-Ziyarah (also called Tawaf al-Ifadah). Perform 7 rounds like other tawafs.",
+          "After Tawaf, pray 2 rak’ahs behind Maqam Ibrahim if possible.",
+          "Then perform Sa’ee if you haven’t already done so after your Qudoom Tawaf (for Qiran/Ifrad) or after Umrah (Tamattu).",
+          "After completing Sa’ee, you are now completely out of Ihram. All restrictions are lifted.",
+          "Return to Mina and stay the night in your tent."
+        ],
+        "tips": [
+          "This day can feel overwhelming — stay patient and follow your group's logistics.",
+          "Rami must be done first. If your sacrifice gets delayed, wait until it’s confirmed before shaving.",
+          "Carry snacks and hydration because you may not return to Mina until late.",
+          "Do not perform Tawaf Al-Ziyarah immediately after Rami becuase it's too crowded and hot. Rest till Maghrib in your camp and go for Tawaf Al-Ziyarah after Maghrib or Isha",
+          "Document your sacrifices properly especially if done via tokens or coupons."
+        ]
+      },
+
+      "9dh_arafat": {
+        "title": "9th Dhul Hijjah – Day of Arafat",
+        "intro": "This is the most important day of Hajj. The Prophet ﷺ said: \"Hajj is Arafah.\" It is the day of standing in Arafat, making dua, and seeking forgiveness. If you miss this day, your Hajj is invalid.",
+        "steps": [
+          "After Fajr in Mina, proceed to Arafat. Arrive before midday (Zawal).",
+          "Settle in your designated tent within the boundaries of Arafat. Do not leave this area until sunset.",
+          "After Zawal, listen to the Khutbah (sermon) if available via your camp's system or broadcast.",
+          "Pray Dhuhr and Asr in your tent (not Masjid Namirah) at their respective times, in congregation (Jamat).",
+          "After the prayers, dedicate yourself to dua, dhikr, Quran recitation, and sincere repentance.",
+          "Stand facing the Qiblah (not the mountain) and raise your hands in dua as long as you can.",
+          "Recite this dua often:<br><br><em>لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</em><br><br><strong>Transliteration:</strong> La ilaha illallah, wahdahu la sharika lah, lahul mulk, wa lahul hamd, wa huwa ‘ala kulli shay’in qadeer.<br><strong>Translation:</strong> There is no god but Allah, alone without partner. His is the dominion and His is the praise, and He has power over all things.",
+          "Do not attempt to climb Jabal ar-Rahmah during peak hours. Focus on your connection with Allah instead.",
+          "After sunset, leave Arafat quietly with your group without praying Maghrib. Your next destination is Muzdalifah."
+        ],
+        "tips": [
+          "Bring a small dua book or pre-written list of duas to make on this day.",
+          "Use a prayer mat or towel to sit comfortably in the tent or under a tree.",
+          "Save your location and stick close to your camp – it’s easy to get lost in Arafat.",
+          "This day is not about sightseeing or wandering. It's your moment to pour your heart out in front of Allah.",
+          "Avoid arguments, loud talking, and distractions. Stay in a state of wudhu as much as possible."
+        ]
+      },
+
+      "snapshot_ifrad": {
+        title: "Complete Hajj Snapshot – Hajj al-Ifrad",
+        intro: `This is a high-level summary of Hajj al-Ifrad. In this type of Hajj, only Hajj is performed — there is no Umrah. The pilgrim remains in Ihram from the Miqat until the 10th of Dhul Hijjah.<br><br>Below is the step-by-step summary:`,
+        steps: [
+          "Make intention for Hajj only at the Miqat and enter into Ihram.",
+          "Upon arriving in Makkah, perform Tawaf al-Qudoom and optionally perform Sa’ee.",
+          "Stay in Ihram until 10th Dhul Hijjah. No shaving or trimming is done until then.",
+          "8th Dhul Hijjah: Go to Mina. Offer five prayers (Dhuhr to Fajr) in Mina camps in congregation (jamat)",
+          "9th Dhul Hijjah: Proceed to Arafat after Fajr. Stay there until sunset. Offer Dhuhr and Asr in your camps separately at their respective times. Spend the afternoon in dua and dhikr.",
+          "After sunset, head to Muzdalifah without praying Maghrib. Offer Maghrib and Isha combined and spend the night there.",
+          "10th Dhul Hijjah: Perform Rami of Jamrat al-Aqabah (big Jamrah), then shave or trim hair and exit Ihram partially. Proceed to Makkah for Tawaf al-Ziyarah and Sa’ee (if not done earlier). You now exit Ihram completely.",
+          "11th and 12th Dhul Hijjah: Perform Rami of all three Jamarat each day after Zawal. Spend the nights in Mina.",
+          "Optionally stay for 13th Dhul Hijjah and perform Rami.",
+          "Before leaving Makkah, perform Tawaf al-Wida (Farewell Tawaf)."
+        ]
+      },
+      "8dh": {
+        "title": "8th Dhul Hijjah – Day of Tarwiyah",
+        "intro": "This marks the official start of Hajj. Pilgrims prepare for the journey to Mina and begin their Hajj rituals. It is a day of calm worship, preparation, and staying in Mina overnight.",
+        "steps": [
+          "If you're doing Hajj al-Tamattu, enter into Ihram again from your accommodation with the intention of Hajj. Those performing Qiran or Ifraad are already in the state of Ihraam",
+          "Recite the Talbiyah aloud after making intention:<br><br><em>لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</em><br><br><strong>Translation:</strong> Here I am, O Allah, here I am. You have no partner. Here I am. Indeed, all praise, grace, and sovereignty belong to You. You have no partner.",
+          "Proceed to Mina after sunrise. Most groups leave between 7 AM and 10 AM.",
+          "Stay in your designated Mina camp. Offer Dhuhr, Asr, Maghrib, and Isha in congregation (jamat) at their proper times.",
+          "Continue reciting Talbiyah frequently throughout the day and night.",
+          "Engage in reflection, dhikr, reading Qur’an, and making dua.",
+          "Sleep in Mina and prepare for the journey to Arafat the next day."
+        ],
+        "tips": [
+          "Pack light but include essentials like water, toiletries, and extra ihram clothing if needed.",
+          "Keep your phone charged and your camp location pinned in Google Maps as soon as you arrive.",
+          "Keep your Hajj ID band and travel documents with you at all times.",
+          "Use this day to mentally and spiritually prepare for the Day of Arafah.",
+          "Avoid arguments and idle talk. Stay focused on your intention.",
+          "Mina is your Hajj base camp — but unfortunately, many waste their Hajj reward here through arguments, gossip, or wandering aimlessly. Plan your time and fill it with worship, dua, or rest — nothing else."
+        ]
+      },
+
+      "qudoom": {
+        title: "Tawaf al-Qudoom",
+        intro: `Tawaf al-Qudoom (Arrival Tawaf) is a Sunnah act performed by those doing Hajj al-Ifrad or Hajj al-Qiran. It is not applicable to those performing Hajj al-Tamattu, as they do Umrah upon arrival instead.<br><br>✔️ This Tawaf is performed upon entering Makkah before the Hajj days begin. It is a greeting to the Sacred Mosque and a way to spiritually prepare for the upcoming rituals of Hajj.<br><br>✔️ For those performing Hajj al-Qiran or Ifrad, Sa’ee can either be done after this Tawaf or postponed until after Tawaf al-Ziyarah on 10th Dhul Hijjah.<br><br>Below are the detailed steps:`,
+        steps: [
+          "Make the intention for Tawaf al-Qudoom when entering Masjid al-Haram.",
+          "Ensure you are in a state of wudhu before starting.",
+          "Before starting Tawaf, welcome the Ka'bah by performing Istaqbal of Hajr al-Aswad. Men will raise hands till ears and women till chest (like Takbeer-e-Tahreema) and say:<br><br><em>بِسْـمِ اللّٰهِ اللّٰهُ أَكْبَر</em> (Bismillahi Allahu Akbar).",
+          "Then begin your Tawaf from Hajr al-Aswad by performing Istilam. Raise both hands till your chest, facing the Black Stone, say:<br><br><em>بِسْـمِ اللّٰهِ اللّٰهُ أَكْبَر وَلِلّهِ الْـحَمْد، وَالصَّلَاةُ وَالسَّلامُ عَلَى رَسُولِ اللّهِ</em><br><br>Then kiss your palms (or just raise hands if not possible). Do this at the beginning of every round in the Tawaf, and once at the end of Tawaf. This makes it 8 Istilam signals in total. Stop reciting Talbiyah from this point onward.<br><br>Now start walking. Complete 7 anti-clockwise circuits around the Ka’bah, beginning and ending at Hajr al-Aswad.",
+          "Men should perform Ramal in the first 3 circuits. Ramal means walking quickly with short steps, with shoulders slightly raised — like a wrestler. If it's too crowded to do Ramal, you may skip it.",
+          "Men should also do Iztiba (uncover the right shoulder) during this Tawaf.",
+          "After completing Tawaf, offer two rak'ahs Salah behind Maqam Ibrahim or at any convenient place in the Masjid.",
+          "Drink Zamzam water and make dua — this is a special moment for acceptance.<br><br><strong>Dua while drinking Zamzam:</strong><br><br><em>Arabic:</em><br>اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمَاً نَافِعَاًً وَرِزْقَاً وَاسِعَاًَ وَشِفَاءً مِنْ كُلِّ دَاءٍ<br><br><em>Transliteration:</em><br>Allahumma inni as'aluka ‘ilman naafi‘an, wa rizqan waasi‘an, wa shifaa'an min kulli daa'.<br><br><em>Translation:</em><br>O Allah, I ask You for beneficial knowledge, abundant provision, and healing from every disease.",
+          "Touch Rukn-e-Yamani (the corner before Hajr al-Aswad) if possible. If not, do not raise hands. Then recite this dua until Hajr al-Aswad:<br><br><em>رَبَّنَا آتِنَا فِى الدُّنْيَا حَسَنَةً وَفِى الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</em>",
+          "After finishing your 7th round, perform Istilam once more at Hajr al-Aswad to conclude Tawaf.",
+          "Make heartfelt dua at Multazam (the space between the door of Ka'bah and Hajr al-Aswad). It's a special place for acceptance. If you can't reach, face it from wherever you are.",
+          "Perform 2 rak’ahs Wajib al-Tawaf behind Maqam Ibrahim if possible, or elsewhere in the Haram. Cover your shoulder during Salah and preferably recite Surah Kafiroon and Ikhlaas in the two rak’ahs.",
+          "Then go to the Zamzam coolers, face the Ka'bah, and drink abundantly while making dua.",
+          "If you're performing Hajj al-Qiran or Ifrad, you may perform Sa’ee now. If done, it doesn't have to be repeated later after Tawaf al-Ziyarah.",
+          "If you delay Sa’ee, it must be done after Tawaf al-Ziyarah on 10th Dhul Hijjah."
+        ],
+        tips: [
+          "Tawaf al-Qudoom should ideally be done soon after reaching Makkah, but it can be delayed slightly if you're exhausted.",
+          "Maintain wudhu throughout the Tawaf — this is a condition for its validity.",
+          "Ramal and Iztiba are specific to this Tawaf and Tawaf al-Umrah — don't forget to apply them if you're a male pilgrim.",
+          "Avoid overexertion if the Masjid is crowded. You can perform this Tawaf during less congested hours (e.g., early morning or late night)."
+        ]
+      }
+    };
+
+    document.getElementById('getInstructions').addEventListener('click', () => {
+      const topic = document.getElementById('hajjTopic').value;
+      const type = document.getElementById('hajjType').value;
+      const result = document.getElementById('result');
+
+      if (!topic || (topic === 'snapshot' && !type)) {
+        result.innerHTML = '<p style="color: red;">Please select both Hajj type and topic.</p>';
+        return;
+      }
+
+      let data;
+      if (topic === 'snapshot') {
+        data = hajjContent[`snapshot_${type}`];
+      } else {
+        data = hajjContent[topic];
+      }
+
+      if (!data) {
+        result.innerHTML = '<p>No data available for this topic yet.</p>';
+        return;
+      }
+
+      let output = `<h2>${data.title}</h2><div>${data.intro.replace(/\n/g, '<br>')}</div><h3>Steps:</h3><ol>`;
+      data.steps.forEach(step => output += `<li>${step}</li>`);
+      output += '</ol>';
+      if (data.tips) {
+        output += '<h3>Tips:</h3><ul>';
+        data.tips.forEach(tip => output += `<li>${tip}</li>`);
+        output += '</ul>';
+      }
+      result.innerHTML = output;
+    });
+  </script>
+</body>
+</html>
